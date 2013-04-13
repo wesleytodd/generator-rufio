@@ -1,0 +1,22 @@
+{
+  "name": "rufio-site",
+  "version": "0.0.1",
+  "description": "",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "generator-rufio": "~0.0.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-sass": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-regarde": "~0.1.1",
+    "grunt-contrib-livereload": "~0.1.2",
+    "grunt-contrib-jshint": "~0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": ""
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD"
+}

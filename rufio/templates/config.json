@@ -1,0 +1,28 @@
+{
+	"types" : {
+		"page" : {
+			"directory" : "pages",
+			"suffix" : "md",
+			"permalinks" : "{{Slug}}.html"
+		},
+		"post" : {
+			"directory" : "posts",
+			"suffix" : "md",
+			"permalinks" : "{{Date.year}}/{{Date.month}}/{{Slug}}.html"
+		}
+	},
+	"themes" : {
+		"directory" : "themes",
+		"active" : "default"
+	},
+	"build" : {
+		"directory" : "build"
+	},
+	"rufio" : {
+		"metaTokens" : {
+			"start" : "----BEGIN META----",
+			"end" : "----END META----"
+		},
+		"templateExtention" : "hb"
+	}
+}
