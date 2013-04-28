@@ -3,12 +3,12 @@
 		"page" : {
 			"directory" : "pages",
 			"suffix" : "md",
-			"permalinks" : "{{Slug}}.html"
+			"permalinks" : "{{slug}}.html"
 		},
 		"post" : {
 			"directory" : "posts",
 			"suffix" : "md",
-			"permalinks" : "{{Date.year}}/{{Date.month}}/{{Slug}}.html"
+			"permalinks" : "{{date.year}}/{{date.month}}/{{slug}}.html"
 		}
 	},
 	"themes" : {

@@ -10,7 +10,7 @@
         <meta name="description" content="{{meta.description}}">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="/css/global.css">
-        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="/js/vendor/modernizr/modernizr.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -19,11 +19,7 @@
 
 		<header id="page-header">
 			<h1><a href="/">Site Title</a></h1>
-			<nav id="primary-nav">
-				<ul>
-					<li><a href="/example">Example</a></li>
-				</ul>
-			</nav>
+			{{navList types.page.items 'primary-nav'}}
 		</header>
 		<div id="page-content">
 			{{{content}}}
@@ -33,7 +29,7 @@
 		</footer>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="/js/vendor/jquery/jquery.js"><\/script>')</script>
         <script src="/js/global.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

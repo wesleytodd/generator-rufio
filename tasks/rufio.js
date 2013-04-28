@@ -1,55 +1,55 @@
+// Requires
 var fs = require('fs'),
 	path = require('path'),
 	marked = require('marked'),
 	config = require('../config'),
 	util = require('../util'),
-	helpers = require('../helpers');
+	helpers = require('../helpers'),
+	types = require('../types');
 
-var buildDataType = function(type) {
+// Generates a single data type
+var buildDataType = function(type, types) {
 	var conf = config.read();
-	util.eachFileInDir(conf.types[type].directory, function(fileName) {
-		// Get the file contents
-		var filePath = path.join(conf.types[type].directory, fileName),
-			// Read the meta information from the header of the file
-			fileMeta = helpers.getMeta(filePath),
-			// Strip our the meta information and just return the contents
-			fileContent = marked(helpers.getContent(filePath)),
-			// Build the template and render it
-			parsedContent = helpers.getTemplate(type, fileMeta)({
-				meta : fileMeta,
-				content : fileContent
-			}),
-			// Get the permalink structure for the content type
-			permalink = helpers.getPermalinkTemplate(type)(fileMeta);
 
-		// Write the file
-		util.writeFile(path.join(conf.build.directory, permalink), parsedContent);
-	});
+	// Load theme helpers
+	var helpersFile = path.resolve(path.join(conf.themes.directory, conf.themes.active, 'helpers.js'));
+	if (fs.existsSync(helpersFile)) {
+		require(helpersFile)(util.handlebars);
+	}
+
+	for (var i in types[type].items) {
+		var item = types[type].items[i];
+		var parsedContent = helpers.getTemplate(type, item.meta)({
+			config : conf,
+			types : types,
+			meta : item.meta,
+			content : item.content,
+			permalink : item.permalink
+		});
+		util.writeFile(path.join(conf.build.directory, item.permalink), parsedContent);
+	}
 };
 
 module.exports = function (grunt) {
 
-	var allTasks = ['create-build-dir'];
+	grunt.registerTask('build', function() {
 
-	grunt.registerTask('create-build-dir', function() {
-		var conf = config.read().build;
-
-		// Remove the existing directory if it exists
-		if (fs.existsSync(conf.directory)) {
-			util.wrench.rmdirSyncRecursive(conf.directory);
+		if (!fs.existsSync(config.read().build.directory)) {
+			fs.mkdirSync(config.read().build.directory);
 		}
-		fs.mkdirSync(conf.directory);
 
+		var t = types.compileAllTypes();
+		for (var type in t) {
+			buildDataType(type, t);
+		}
 	});
 
 	for (var type in config.read().types) {
-		allTasks.push('build-' + type);
 		(function(type) {
 			grunt.registerTask('build-' + type, function() {
-				buildDataType(type);
+				buildDataType(type, types.compileAllTypes());
 			});
 		})(type);
 	}
 
-	grunt.registerTask('build', allTasks);
 };

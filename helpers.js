@@ -30,27 +30,27 @@ var getMeta = function(filepath) {
 	headers = headers.splice(1, headers.length - 2);
 
 	var filename = filepath.split('/');
-	output['Slug'] = filename[filename.length-1].split('.')[0];
+	output['slug'] = filename[filename.length-1].split('.')[0];
 
 	// Add each header to the output object
 	for (var h in headers) {
 		var keyVal = headers[h].split(':');
 		switch(keyVal[0]) {
-			case 'Date' :
+			case 'date' :
 				keyVal.shift();
 				keyVal = keyVal.join(':');
 				var d = new Date(keyVal);
-				output['Date'] = {
+				output['date'] = {
 					full : d.toString(),
 					minute : d.getMinutes(),
 					hour : d.getHours(),
 					day : d.getDate(),
-					month : d.getMonth(),
+					month : d.getMonth() + 1,
 					year : d.getFullYear()
 				};
 				break;
 			default :
-				output[keyVal.shift()] = keyVal.join(':');
+				output[keyVal.shift()] = keyVal.join(':').trim();
 				break;
 		}
 	}
