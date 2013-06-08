@@ -32,7 +32,11 @@ var compileType = function(type) {
 				items : []
 			};
 		util.eachFileInDir(conf.directory, function(fileName) {
-			out.items.push(compileItem(type, path.join(conf.directory, fileName)));
+			var fileMeta = helpers.getMeta(path.join(conf.directory, fileName));
+			console.log(fileMeta);
+			if (typeof fileMeta.status === 'undefined' || fileMeta.status !== 'Draft') {
+				out.items.push(compileItem(type, path.join(conf.directory, fileName)));
+			}
 		});
 		return out;
 	}
