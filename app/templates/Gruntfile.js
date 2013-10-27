@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 	
 	grunt.initConfig({
-		rufio : grunt.file.readJSON('config.json'),
+		rufio : grunt.file.readJSON('rufio.json'),
 		connect : {
 			server : {
 				options : {
@@ -17,14 +17,14 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files : {
-					'<%= rufio.build.directory %>/css/global.css' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/global.scss'
+					'<%= rufio.build.directory %>/css/global.css' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/*.scss'
 				}
 			}
 		},
 		uglify : {
 			build : {
 				files : {
-					'<%= rufio.build.directory %>/js/global.js' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/global.js'
+					'<%= rufio.build.directory %>/js/global.js' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/*.js'
 				}
 			}
 		},

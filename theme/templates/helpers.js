@@ -1,7 +1,7 @@
 module.exports = function(handlebars) {
 	
-	handlebars.registerHelper('navList', function(pages, id) {
-		var out = '<nav id="' + id + '"><ul>';
+	handlebars.registerHelper('navList', function(pages, class) {
+		var out = '<nav class="' + id + '"><ul>';
 		for (var i in pages) {
 			out += '<li><a href="/' + pages[i].permalink + '">' + pages[i].meta.title + '</a></li>';
 		}

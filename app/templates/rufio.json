@@ -2,12 +2,10 @@
 	"types" : {
 		"page" : {
 			"directory" : "pages",
-			"suffix" : "md",
 			"permalinks" : "{{slug}}.html"
 		},
 		"post" : {
 			"directory" : "posts",
-			"suffix" : "md",
 			"permalinks" : "{{date.year}}/{{date.month}}/{{slug}}.html"
 		}
 	},
@@ -20,9 +18,8 @@
 	},
 	"rufio" : {
 		"metaTokens" : {
-			"start" : "----BEGIN META----",
-			"end" : "----END META----"
-		},
-		"templateExtention" : "hb"
+			"start" : "--META--",
+			"end" : "--META--"
+		}
 	}
 }
