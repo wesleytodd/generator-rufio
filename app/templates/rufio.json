@@ -1,25 +1,31 @@
 {
-	"types" : {
-		"page" : {
-			"directory" : "pages",
-			"permalinks" : "{{slug}}.html"
+	"title": "",
+	"hostname": "",
+	"tagline": "",
+	"titleFormat": "<%= meta.title %> - <%= global.title %> - <%= global.tagline %>",
+	"types": {
+		"page": {
+			"directory": "pages",
+			"permalink": "/<%= slug %>.html",
+			"filters": "template,markdown"
 		},
 		"post" : {
-			"directory" : "posts",
-			"permalinks" : "{{date.year}}/{{date.month}}/{{slug}}.html"
+			"directory": "posts",
+			"permalink": "/<%= meta.date.getFullYear() %>/<%= meta.date.getMonth() + 1 %>/<%= slug %>.html",
+			"filters": "template,markdown"
 		}
 	},
-	"themes" : {
-		"directory" : "themes",
-		"active" : "default"
+	"themes": {
+		"directory": "themes",
+		"active": "default"
 	},
-	"build" : {
-		"directory" : "build"
+	"build": {
+		"directory": "build"
 	},
-	"rufio" : {
-		"metaTokens" : {
-			"start" : "--META--",
-			"end" : "--META--"
-		}
+	"rufio": {
+		"metaEnd": "--META--"
+	},
+	"analytics": {
+		"code": "UA-XXXXXXXX-1"
 	}
 }

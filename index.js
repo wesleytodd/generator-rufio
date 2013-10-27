@@ -4,12 +4,16 @@ var config = require('./lib/config'),
 
 var conf = config.get();
 
-// Set env paths
+// Set env vars
 config.set('RUFIO_ROOT', __dirname);
 config.set('BUILD_ROOT', util.path.join(process.cwd(), conf.build.directory));
+config.set('ENVIRONMENT', process.env.RUFIO_ENVIRONMENT);
 
 module.exports = {
 	config: conf,
+	setEnvironment: function(env) {
+		config.set('ENVIRONMENT', env);
+	},
 	compile: function() {
 		var data = {};
 		for (var i in conf.types) {

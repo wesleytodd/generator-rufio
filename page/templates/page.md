@@ -1,5 +1,5 @@
---META--
 Title: <%= name %>
+Description: 
 --META--
 
 # <%= name %>

@@ -1,38 +1,31 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" lang="en" xmlns:og="http://opengraphprotocol.org/schema/">
     <head>
         <meta charset="utf-8">
-        <title>{{meta.title}}</title>
-
-        <link rel="stylesheet" href="/css/global.css">
-
-        <script src="/js/vendor/modernizr/modernizr.js"></script>
-
-        <meta name="description" content="{{meta.description}}">
+        <title><%- getTitleTag() %></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="canonical" href="<%- absUrl %>" />
+		<meta name="description" content="<%- meta.description %>">
+		<%= filters.include('partials/styles.html', obj) %>
+		<%= filters.include('partials/scripts.html', obj) %>
+		<%= filters.include('partials/meta.html', obj) %>
     </head>
     <body>
-        <!--[if lt IE 8]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+		<%= filters.include('partials/oldie.html', obj) %>
 
 		<header class="page-header">
-			<h1><a href="/">Site Title</a></h1>
-			{{navList types.page.items 'primary-nav'}}
+			<h1><a href="/"><%- global.hostname %></a></h1>
+			<h2><%- global.tagline %></h2>
+			<%= filters.navList(types.page.items, 'primary-nav') %>
 		</header>
 		<div class="page-content">
-			{{{content}}}
+			<%= content %>
 		</div>
 		<footer class="page-footer">
 			<small>&copy;2013</small>
 		</footer>
 
-        <script src="/js/global.js"></script>
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+	 	<%= if (global.ENVIRONMENT != 'dev') filters.include('partials/analytics.html', obj) %>
+		<%= if (global.ENVIRONMENT == 'dev') filters.include('partials/livereload.html', obj) %>
     </body>
 </html>

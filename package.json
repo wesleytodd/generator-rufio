@@ -17,7 +17,8 @@
     "yeoman-generator": "~0.14.0",
     "marked": "~0.2.9",
     "handlebars": "~1.0.10",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "mkdirp": "~0.3.5"
   },
   "repository": {
     "type": "git",

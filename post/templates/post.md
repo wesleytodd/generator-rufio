@@ -1,4 +1,3 @@
---META--
 Title: <%= name %>
 Date: <%= date %>
 Status: Draft

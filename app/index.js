@@ -1,6 +1,6 @@
 var yeoman = require('yeoman-generator'),
-	inherits = require('util').inherits;
-;
+	inherits = require('util').inherits,
+	mkdirp = require('mkdirp');
 
 var Generator = module.exports = function Generator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
@@ -12,6 +12,9 @@ inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.init = function() {
 	this.directory('.', '.');
+	mkdirp('themes');
+	mkdirp('page');
+	mkdirp('post');
 };
 
 Generator.prototype.makeTheme = function() {

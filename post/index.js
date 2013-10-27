@@ -11,13 +11,7 @@ var Generator = module.exports = function Generator(args, options, config) {
 	}
 
 	// Load config
-	try {
-		var file = this.read(util.path.join(process.cwd(), 'rufio.json'));
-		this.conf = JSON.parse(file);
-	} catch (e) {
-		this.log.write('Config file does not exist or is not valid JSON!!!!');
-		process.exit();
-	}
+	this.conf = config.get();
 
 	// Create date
 	this.date = new Date();

@@ -13,13 +13,7 @@ function Generator(args, options, config) {
 	}
 
 	// Load config
-	try {
-		var file = this.read(util.path.join(process.cwd(), 'rufio.json'));
-		this.conf = JSON.parse(file);
-	} catch (e) {
-		this.log.write('Config file does not exist or is not valid JSON!!!!');
-		process.exit();
-	}
+	this.conf = config.get();
 	
 	// Log on complete
 	this.on('end', function () {
@@ -29,6 +23,5 @@ function Generator(args, options, config) {
 inherits(Generator, yeoman.generators.NamedBase);
 
 Generator.prototype.makeTheme = function() {
-	var	dirName = util.path.join(this.conf.themes.directory, util.dirify(this.name));
-	this.directory('.', dirName);
+	this.directory('.', util.path.join(this.conf.themes.directory, util.dirify(this.name)));
 }
