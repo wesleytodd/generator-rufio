@@ -2,7 +2,7 @@
   "name": "<%= input.title %>",
   "version": "0.0.1",
   "description": "",
-  "dependencies": {
+  "devDependencies": {
     "rufio": "~0.0.1",
     "grunt": "~0.4.1",
     "grunt-contrib-connect": "~0.5.0",
