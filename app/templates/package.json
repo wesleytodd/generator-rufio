@@ -1,8 +1,7 @@
 {
-  "name": "rufio-site",
+  "name": "<%= input.title %>",
   "version": "0.0.1",
   "description": "",
-  "main": "",
   "dependencies": {
     "generator-rufio": "~0.0.1",
     "grunt": "~0.4.1",
@@ -17,7 +16,5 @@
     "grunt-contrib-htmlmin": "~0.1.3",
     "grunt-prettify": "~0.2.9"
   },
-  "repository": "",
-  "author": "",
   "license": "BSD"
 }

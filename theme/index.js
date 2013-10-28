@@ -1,10 +1,12 @@
 var yeoman = require('yeoman-generator'),
 	inherits = require('util').inherits,
+	config = require('../lib/config'),
+	mkdirp = require('mkdirp'),
 	util = require('../lib/util');
 
 module.exports = Generator;
 
-function Generator(args, options, config) {
+function Generator() {
 	yeoman.generators.NamedBase.apply(this, arguments);
 
 	if (typeof this.name === 'undefined') {
@@ -23,5 +25,6 @@ function Generator(args, options, config) {
 inherits(Generator, yeoman.generators.NamedBase);
 
 Generator.prototype.makeTheme = function() {
+	mkdirp('themes');
 	this.directory('.', util.path.join(this.conf.themes.directory, util.dirify(this.name)));
 }

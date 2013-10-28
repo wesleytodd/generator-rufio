@@ -1,17 +1,17 @@
 {
-	"title": "",
-	"hostname": "",
-	"tagline": "",
-	"titleFormat": "<%= meta.title %> - <%= global.title %> - <%= global.tagline %>",
+	"title": "<%= input.title %>",
+	"hostname": "<%= input.url %>",
+	"tagline": "<%= input.tagline %>",
+	"titleFormat": "<%%= meta.title %> - <%%= global.title %> - <%%= global.tagline %>",
 	"types": {
 		"page": {
 			"directory": "pages",
-			"permalink": "/<%= slug %>.html",
+			"permalink": "/<%%= slug %>.html",
 			"filters": "template,markdown"
 		},
 		"post" : {
 			"directory": "posts",
-			"permalink": "/<%= meta.date.getFullYear() %>/<%= meta.date.getMonth() + 1 %>/<%= slug %>.html",
+			"permalink": "/<%%= meta.date.getFullYear() %>/<%%= meta.date.getMonth() + 1 %>/<%%= slug %>.html",
 			"filters": "template,markdown"
 		}
 	},

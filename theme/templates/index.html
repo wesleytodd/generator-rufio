@@ -8,7 +8,6 @@
 		<meta name="description" content="<%- meta.description %>">
 		<%= filters.include('partials/styles.html', obj) %>
 		<%= filters.include('partials/scripts.html', obj) %>
-		<%= filters.include('partials/meta.html', obj) %>
     </head>
     <body>
 		<%= filters.include('partials/oldie.html', obj) %>
@@ -25,7 +24,7 @@
 			<small>&copy;2013</small>
 		</footer>
 
-	 	<%= if (global.ENVIRONMENT != 'dev') filters.include('partials/analytics.html', obj) %>
-		<%= if (global.ENVIRONMENT == 'dev') filters.include('partials/livereload.html', obj) %>
+	 	<%= (global.ENVIRONMENT != 'dev') ? filters.include('partials/analytics.html', obj) : '' %>
+		<%= (global.ENVIRONMENT == 'dev') ? filters.include('partials/livereload.html', obj) : '' %>
     </body>
 </html>

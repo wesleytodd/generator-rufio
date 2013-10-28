@@ -10,11 +10,41 @@ var Generator = module.exports = function Generator(args, options, config) {
 };
 inherits(Generator, yeoman.generators.Base);
 
+Generator.prototype.ask = function() {
+	var done = this.async();
+
+	var defaultTitle = process.cwd().split('/');
+	defaultTitle = defaultTitle[defaultTitle.length-1];
+
+	this.prompt([{
+		name: 'title',
+		message: 'Site Title:',
+		default: defaultTitle
+	}, {
+		name: 'url',
+		message: 'Site Hostname:'
+	}, {
+		name: 'tagline',
+		message: 'Tagline:'
+	}], function(err, input) {
+		if (err) {
+			this.log.write(err);
+			process.exit();
+		}
+		this.input = input;
+		done();
+	}.bind(this));
+};
+
 Generator.prototype.init = function() {
-	this.directory('.', '.');
-	mkdirp('themes');
-	mkdirp('page');
-	mkdirp('post');
+	mkdirp('filters');
+	this.template('bower.json');
+	this.template('package.json');
+	this.template('rufio.json');
+	this.copy('bowerrc', '.bowerrc');
+	this.copy('gitignore', '.gitignore');
+	this.copy('Gruntfile.js', 'Gruntfile.js');
+	this.copy('filters/navList.js', 'filters/navList.js');
 };
 
 Generator.prototype.makeTheme = function() {
