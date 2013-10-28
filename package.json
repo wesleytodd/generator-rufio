@@ -20,6 +20,6 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:wesleytodd/generator-rufio.git"
   }
 }
