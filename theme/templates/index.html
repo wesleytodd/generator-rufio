@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns:og="http://opengraphprotocol.org/schema/">
+    <head>
+        <meta charset="utf-8">
+        <title><%- getTitleTag() %></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="canonical" href="<%- absUrl %>" />
+		<meta name="description" content="<%- meta.description %>">
+		<%= filters.include('partials/styles.html', obj) %>
+		<%= filters.include('partials/scripts.html', obj) %>
+    </head>
+    <body>
+		<%= filters.include('partials/oldie.html', obj) %>
+
+		<header class="page-header">
+			<h1><a href="/"><%- global.hostname %></a></h1>
+			<h2><%- global.tagline %></h2>
+			<%= filters.navList(types.page.items, 'primary-nav') %>
+		</header>
+		<div class="page-content">
+			<%= content %>
+		</div>
+		<footer class="page-footer">
+			<small>&copy;2013</small>
+		</footer>
+
+	 	<%= (global.ENVIRONMENT != 'dev') ? filters.include('partials/analytics.html', obj) : '' %>
+		<%= (global.ENVIRONMENT == 'dev') ? filters.include('partials/livereload.html', obj) : '' %>
+    </body>
+</html>

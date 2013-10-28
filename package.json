@@ -2,9 +2,10 @@
   "name": "generator-rufio",
   "version": "0.0.1",
   "description": "",
+  "main": "index.js",
   "keywords": [
     "yeoman-generator",
-	"static site generator",
+    "static site generator",
     "rufio"
   ],
   "scripts": {
@@ -13,11 +14,9 @@
   "author": "Wes Todd",
   "license": "BSD",
   "dependencies": {
-    "yeoman-generator": "~0.10.0",
-    "marked": "~0.2.8",
-    "handlebars": "~1.0.10",
-    "mkdirp": "~0.3.5",
-    "wrench": "~1.4.4"
+    "yeoman-generator": "~0.14.0",
+    "rufio": "~0.0.1",
+    "mkdirp": "~0.3.5"
   },
   "repository": {
     "type": "git",
