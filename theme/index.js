@@ -1,8 +1,7 @@
 var yeoman = require('yeoman-generator'),
 	inherits = require('util').inherits,
-	config = require('../lib/config'),
 	mkdirp = require('mkdirp'),
-	util = require('../lib/util');
+	rufio = require('rufio');
 
 module.exports = Generator;
 
@@ -15,7 +14,7 @@ function Generator() {
 	}
 
 	// Load config
-	this.conf = config.get();
+	this.conf = rufio.config.get();
 	
 	// Log on complete
 	this.on('end', function () {
@@ -26,5 +25,5 @@ inherits(Generator, yeoman.generators.NamedBase);
 
 Generator.prototype.makeTheme = function() {
 	mkdirp('themes');
-	this.directory('.', util.path.join(this.conf.themes.directory, util.dirify(this.name)));
+	this.directory('.', rufio.util.path.join(this.conf.themes.directory, rufio.util.dirify(this.name)));
 }

@@ -1,8 +1,7 @@
 var yeoman = require('yeoman-generator'),
 	inherits = require('util').inherits,
-	config = require('../lib/config'),
 	mkdirp = require('mkdirp'),
-	util = require('../lib/util');
+	rufio = require('rufio');
 
 var Generator = module.exports = function Generator() {
 	yeoman.generators.NamedBase.apply(this, arguments);
@@ -13,7 +12,7 @@ var Generator = module.exports = function Generator() {
 	}
 
 	// Load config
-	this.conf = config.get();
+	this.conf = rufio.config.get();
 
 	// Create date
 	this.date = new Date();
@@ -26,6 +25,6 @@ var Generator = module.exports = function Generator() {
 inherits(Generator, yeoman.generators.NamedBase);
 
 Generator.prototype.init = function() {
-	mkdirp('post');
-	this.copy('post.md', util.path.join(this.conf.types.post.directory, util.dirify(this.name) + '.md'));
+	mkdirp('posts');
+	this.copy('post.md', rufio.util.path.join(this.conf.types.post.directory, rufio.util.dirify(this.name) + '.md'));
 }

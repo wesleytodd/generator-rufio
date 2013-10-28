@@ -172,7 +172,7 @@ module.exports = function(grunt) {
 		'grunt-contrib-watch',
 		'grunt-concurrent',
 		'grunt-prettify',
-		'generator-rufio',
+		'rufio',
 	].forEach(grunt.loadNpmTasks);
 
 	// Register composte tasks

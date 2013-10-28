@@ -26,11 +26,7 @@ Generator.prototype.ask = function() {
 	}, {
 		name: 'tagline',
 		message: 'Tagline:'
-	}], function(err, input) {
-		if (err) {
-			this.log.write(err);
-			process.exit();
-		}
+	}], function(input) {
 		this.input = input;
 		done();
 	}.bind(this));

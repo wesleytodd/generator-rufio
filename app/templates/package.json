@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "dependencies": {
-    "generator-rufio": "~0.0.1",
+    "rufio": "~0.0.1",
     "grunt": "~0.4.1",
     "grunt-contrib-connect": "~0.5.0",
     "grunt-contrib-uglify": "~0.2.4",
