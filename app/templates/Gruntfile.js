@@ -65,6 +65,11 @@ module.exports = function(grunt) {
 					src: '{**/*.js,*.js}',
 					dest: '<%= rufio.build.directory %>/js/'
 				}]
+			},
+			media: {
+				files: {
+					'<%= rufio.build.directory %>/': '<%= rufio.media.directory %>/**'
+				}
 			}
 		},
 
@@ -88,6 +93,30 @@ module.exports = function(grunt) {
 			}
 		},
 
+		// Copy and compress the images
+		imagemin: {
+			dev: {
+				options: {
+					optimizationLevel: 0
+				},
+				files: [{
+					expand: true,
+					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/images',
+					src: ['**/*.{png,jpg,gif}'],
+					dest: '<%= rufio.build.directory %>/images'
+				}]
+			},
+			build: {
+				files: [{
+					expand: true,
+					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/images',
+					src: ['**/*.{png,jpg,gif}'],
+					dest: '<%= rufio.build.directory %>/images'
+				}]
+			}
+		},
+
+		// Prettify the development html
 		prettify: {
 			dev: {
 				files: [{
@@ -122,6 +151,18 @@ module.exports = function(grunt) {
 				files: {
 					'<%= rufio.build.directory %>/css/app.min.css' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/app.scss'
 				}
+			}
+		},
+		
+		// Minify svg assets
+		svgmin: {
+			build: {
+				files: [{
+					expand: true,
+					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/images',
+					src: ['**/*.svg'],
+					dest: '<%= rufio.build.directory %>/images'
+				}]
 			}
 		},
 		
@@ -167,19 +208,21 @@ module.exports = function(grunt) {
 		'grunt-contrib-connect',
 		'grunt-contrib-copy',
 		'grunt-contrib-htmlmin',
+		'grunt-contrib-imagemin',
 		'grunt-contrib-sass',
 		'grunt-contrib-uglify',
 		'grunt-contrib-watch',
 		'grunt-concurrent',
 		'grunt-prettify',
+		'grunt-svgmin',
 		'rufio',
 	].forEach(grunt.loadNpmTasks);
 
 	// Register composte tasks
 	grunt.util._({
 		'default': ['build-dev', 'concurrent:watch'],
-		'build': ['clean:build', 'copy', 'uglify:build', 'sass:build', 'assets', 'rufio', 'htmlmin:build'],
-		'build-dev': ['clean:build', 'copy', 'sass:dev', 'assets', 'rufio-dev', 'prettify'],
+		'build': ['clean:build', 'copy', 'uglify:build', 'sass:build', 'assets', 'rufio', 'htmlmin:build', 'imagemin:build', 'imagemin:build'],
+		'build-dev': ['clean:build', 'copy', 'sass:dev', 'assets', 'rufio-dev', 'prettify', 'imagemin:dev', 'svgmin:build'],
 	}).map(function(task, name) {
 		grunt.registerTask(name, task);
 	});

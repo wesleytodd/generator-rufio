@@ -25,6 +25,8 @@ var Generator = module.exports = function Generator() {
 inherits(Generator, yeoman.generators.NamedBase);
 
 Generator.prototype.init = function() {
+	var slug = rufio.util.dirify(this.name);
+	mkdirp(rufio.util.path.join(this.conf.media.directory, slug));
 	mkdirp('posts');
-	this.copy('post.md', rufio.util.path.join(this.conf.types.post.directory, rufio.util.dirify(this.name) + '.md'));
+	this.copy('post.md', rufio.util.path.join(this.conf.types.post.directory, slug + '.md'));
 }

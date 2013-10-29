@@ -19,6 +19,9 @@
 		"directory": "themes",
 		"active": "default"
 	},
+	"media": {
+		"directory": "media" 
+	},
 	"build": {
 		"directory": "build"
 	},

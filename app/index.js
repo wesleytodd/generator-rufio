@@ -34,6 +34,7 @@ Generator.prototype.ask = function() {
 
 Generator.prototype.init = function() {
 	mkdirp('filters');
+	mkdirp('media');
 	this.template('bower.json');
 	this.template('package.json');
 	this.template('rufio.json');
@@ -55,4 +56,8 @@ Generator.prototype.makeTheme = function() {
 	this.env.create('rufio:post', {
 		'arguments': ['Example Post'],
 	}).run();
+};
+
+Generator.prototype.install = function() {
+	this.installDependencies();
 };

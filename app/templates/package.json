@@ -1,5 +1,5 @@
 {
-  "name": "<%= input.title %>",
+  "name": "<%= input.url %>",
   "version": "0.0.1",
   "description": "",
   "devDependencies": {
