@@ -35,6 +35,7 @@ Generator.prototype.ask = function() {
 Generator.prototype.init = function() {
 	mkdirp('filters');
 	mkdirp('media');
+	mkdirp('plugins');
 	this.template('bower.json');
 	this.template('package.json');
 	this.template('rufio.json');
