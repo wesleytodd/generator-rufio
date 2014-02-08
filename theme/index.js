@@ -1,15 +1,26 @@
 var yeoman = require('yeoman-generator'),
 	inherits = require('util').inherits,
 	mkdirp = require('mkdirp'),
-	rufio = require('rufio');
+	path = require('path'),
+	Rufio = require('rufio');
 
 module.exports = Generator;
 
 function Generator() {
 	yeoman.generators.NamedBase.apply(this, arguments);
 
-	// Load config
-	this.conf = rufio.config.get();
+	// Start Rufio
+	this.rufio = new Rufio({
+		rufio: {
+			silent: true
+		}
+	});
+
+	// Get the theme directory
+	this.themeDir = this.rufio.config.get('themes:directory');
+
+	// Dirify the name
+	this.themeName = this.rufio.util.dirify(this.name);
 	
 	// Log on complete
 	this.on('end', function () {
@@ -24,39 +35,41 @@ Generator.prototype.ask = function() {
 		done = this.async();
 
 	this.prompt([{
-		message: 'Bowser componenets directory',
-		name: 'bowerDir',
-		default: 'bower_components'
-	}, {
-		message: 'Bower packages to install, comma separated (modernizr,angular#1.2.0)',
-		name: 'bowerPackages'
+		message: 'Bower packages to install, comma separated:',
+		name: 'bowerPackages',
+		default: 'angular',
 	}], function(answers) {
-		me.userInput = answers;
+		me.input = answers;
+		me.input.name = me.name;
 		done();
 	});
 };
 
+// Make theme
 Generator.prototype.makeTheme = function() {
-	mkdirp('themes');
-	this.directory('.', rufio.util.path.join(this.conf.themes.directory, rufio.util.dirify(this.name)));
+	// Make sure the directory is there
+	mkdirp(this.themeDir);
+	// Copy the default theme
+	this.bulkDirectory('.', path.join(this.themeDir, this.themeName));
 };
 
+// Install the bower components
 Generator.prototype.installComponents = function() {
-	if (this.userInput.bowerPackages) {
+	if (this.input.bowerPackages) {
 		var done = this.async();
 
 		// Chdir to theme
-		process.chdir(rufio.util.path.join(this.conf.themes.directory, rufio.util.dirify(this.name)));
+		process.chdir(path.join(this.themeDir, this.themeName));
 
 		// Split the list
-		var pkgs = this.userInput.bowerPackages.split(',')
-			.map(function(i) {
-				return i.trim();
-			});
+		var pkgs = this.input.bowerPackages.split(',').map(Function.prototype.call, String.prototype.trim);
 
 		// Install the packages
-		this.bowerInstall(pkgs, function() {
-			done();
-		});
+		this.bowerInstall(pkgs, {'save': true}, function(err) {
+			// Install deps from bower deps
+			this.bowerInstall([], function(err) {
+				done();
+			});
+		}.bind(this));
 	}
 };

@@ -1,0 +1,72 @@
+@import '../partials/variables',
+		'compass/css3/box-shadow';
+
+/* Media Block */
+@mixin media {
+	border: .0652em dotted lighten($color-content, 50%);
+	background: #fff;
+	padding: 1em;
+	margin: 0 auto 1em;
+	max-width: 18.75em;
+	@include box-shadow(0 0 1.25em 0 #444);
+
+	img,
+	video {
+		width: 100%;
+	}
+
+	@media (min-width: 30em){
+		width: 45%;
+
+		& + .content {
+			width: 52%;
+		}
+	}
+	@media (min-width: 45.625){
+		width: 30%;
+
+		& + .content {
+			width: 66%;
+		}
+
+		&.large {
+			width: 50%;
+			max-width: 600px;
+
+			& + .content {
+				width: 46%;
+			}
+		}
+	}
+	
+}
+.media {
+	@include media;
+}
+.media-left {
+	@include media;
+	@media (min-width: 30em){
+		float: left;
+		margin: 0 3% 1.5% 0;
+
+		& + .content {
+			float: right;
+		}
+	}
+}
+.media-right {
+	@include media;
+	@media (min-width: 30em){
+		float: right;
+		margin: 0 0 1.5% 3%;
+
+		& + .content {
+			float: left;
+		}
+	}
+}
+.media-full {
+	@include media;
+	width: 100% !important;
+	max-width: none;
+}

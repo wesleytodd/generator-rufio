@@ -1,58 +1,45 @@
 module.exports = function(grunt) {
 	
+	//
+	// Register npm tasks
+	//
+	[
+		'grunt-contrib-clean',
+		'grunt-contrib-copy',
+		'grunt-contrib-htmlmin',
+		'grunt-contrib-imagemin',
+		'grunt-contrib-compass',
+		'grunt-contrib-uglify',
+		'grunt-contrib-watch',
+		'grunt-concurrent',
+		'grunt-prettify',
+		'grunt-svgmin',
+		'rufio',
+	].forEach(grunt.loadNpmTasks);
+
+	//
+	// Register composte tasks
+	//
+	grunt.util._({
+		'default': ['build-dev', 'concurrent:watch'],
+		'build': ['clean:build', 'copy:favicon', 'copy:media', 'compass:build', 'rufio:prod', 'htmlmin:build', 'imagemin:build', 'svgmin:build', 'uglify:build'],
+		'build-dev': ['clean:build', 'copy', 'compass:dev', 'rufio:dev', 'prettify:dev', 'imagemin:dev', 'svgmin:build'],
+	}).map(function(task, name) {
+		grunt.registerTask(name, task);
+	});
+
+	//
+	// Init Config
+	//
 	grunt.initConfig({
 
 		// Load the rufio config
-		rufio: grunt.file.readJSON('rufio.json'),
-
-		// Asset manager
-		assets: {
-			js: {
-				files: [{
-					cwd: '<%= rufio.build.directory %>',
-					src: [
-						'js/{*.js,**/*.js}',
-					],
-					dest: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/partials/scripts.html'
-				}]
-			},
-			css: {
-				files: [{
-					cwd: '<%= rufio.build.directory %>',
-					src: ['css/*.css'],
-					dest: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/partials/styles.html'
-				}],
-				options: {
-					type: 'link'
-				}
-			}
-		},
+		config: grunt.file.readJSON('rufio.json'),
 
 		// Clean before building
 		clean: {
 			build: {
-				src: ['<%= rufio.build.directory %>']
-			}
-		},
-
-		// For development, runs watch task along side the connect task
-		concurrent: {
-			watch: {
-				tasks: ['connect', 'watch'],
-				options: {
-					logConcurrentOutput: true
-				}
-			}
-		},
-
-		// Serves the built site
-		connect: {
-			server: {
-				options: {
-					port: 9000,
-					base: '<%= rufio.build.directory %>',
-					keepalive: true
-				}
+				src: ['<%= config.build.directory %>/<%= config.build.active %>']
 			}
 		},
 
@@ -61,14 +48,61 @@ module.exports = function(grunt) {
 			js: {
 				files: [{
 					expand: true,
-					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js',
+					cwd: '<%= config.themes.directory %>/<%= config.themes.active %>/js',
 					src: '{**/*.js,*.js}',
-					dest: '<%= rufio.build.directory %>/js/'
+					dest: '<%= config.build.directory %>/<%= config.build.active %>/js/'
 				}]
 			},
 			media: {
 				files: {
-					'<%= rufio.build.directory %>/': '<%= rufio.media.directory %>/**'
+					'<%= config.build.directory %>/<%= config.build.active %>': '<%= config.media.directory %>/**'
+				}
+			},
+			vendor: {
+				files: [{
+					expand: true,
+					cwd: '<%= config.themes.directory %>/<%= config.themes.active %>/bower_components',
+					src: '**/*',
+					dest: '<%= config.build.directory %>/<%= config.build.active %>/bower_components/'
+				}]
+			},
+			favicon: {
+				files: {
+					'<%= config.build.directory %>/<%= config.build.active %>/favicon.ico': '<%= config.themes.directory %>/<%= config.themes.active %>/favicon.ico'
+				}
+			}
+		},
+
+		// Compile sass files
+		compass: {
+			options: {
+				sassDir: '<%= config.themes.directory %>/<%= config.themes.active %>/scss',
+				cssDir: '<%= config.build.directory %>/<%= config.build.active %>/css'
+			},
+			watch: {
+				options: {
+					outputStyle: 'expanded',
+					watch: true
+				}
+			},
+			dev: {
+				options: {
+					outputStyle: 'expanded'
+				}
+			},
+			build: {
+				options: {
+					outputStyle: 'compressed'
+				}
+			}
+		},
+
+		 // For development, runs watch task along side the compass
+		concurrent: {
+			watch: {
+				tasks: ['compass:watch', 'watch'],
+				options: {
+					logConcurrentOutput: true
 				}
 			}
 		},
@@ -78,9 +112,9 @@ module.exports = function(grunt) {
 			build: {
 				files: [{
 					expand: true,
-					cwd: '<%= rufio.build.directory %>',
+					cwd: '<%= config.build.directory %>/<%= config.build.active %>',
 					src: '{**/*.html,*.html}',
-					dest: '<%= rufio.build.directory %>'
+					dest: '<%= config.build.directory %>/<%= config.build.active %>'
 				}],
 				options: {
 					removeComments: true,
@@ -95,23 +129,26 @@ module.exports = function(grunt) {
 
 		// Copy and compress the images
 		imagemin: {
+			options: {
+				pngquant: true
+			},
 			dev: {
 				options: {
-					optimizationLevel: 0
+					optimizationLevel: 3
 				},
 				files: [{
 					expand: true,
-					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/images',
+					cwd: '<%= config.themes.directory %>/<%= config.themes.active %>/images/',
 					src: ['**/*.{png,jpg,gif}'],
-					dest: '<%= rufio.build.directory %>/images'
+					dest: '<%= config.build.directory %>/<%= config.build.active %>/images/'
 				}]
 			},
 			build: {
 				files: [{
 					expand: true,
-					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/images',
+					cwd: '<%= config.themes.directory %>/<%= config.themes.active %>/images/',
 					src: ['**/*.{png,jpg,gif}'],
-					dest: '<%= rufio.build.directory %>/images'
+					dest: '<%= config.build.directory %>/<%= config.build.active %>/images/'
 				}]
 			}
 		},
@@ -121,9 +158,9 @@ module.exports = function(grunt) {
 			dev: {
 				files: [{
 					expand: true,
-					cwd: '<%= rufio.build.directory %>',
+					cwd: '<%= config.build.directory %>/<%= config.build.active %>',
 					src: '{**/*.html,*.html}',
-					dest: '<%= rufio.build.directory %>'
+					dest: '<%= config.build.directory %>/<%= config.build.active %>'
 				}],
 				options: {
 					indent_char: '\t',
@@ -134,34 +171,28 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Compile sass files
-		sass: {
+		// Rufio build
+		rufio: {
 			dev: {
 				options: {
-					style: 'expanded'
-				},
-				files: {
-					'<%= rufio.build.directory %>/css/app.css' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/app.scss'
+					environment: 'dev'
 				}
 			},
-			build: {
+			prod: {
 				options: {
-					style: 'compressed'
-				},
-				files: {
-					'<%= rufio.build.directory %>/css/app.min.css' : '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/app.scss'
+					environment: 'prod'
 				}
 			}
 		},
-		
+
 		// Minify svg assets
 		svgmin: {
 			build: {
 				files: [{
 					expand: true,
-					cwd: '<%= rufio.themes.directory %>/<%= rufio.themes.active %>/images',
+					cwd: '<%= config.themes.directory %>/<%= config.themes.active %>/images',
 					src: ['**/*.svg'],
-					dest: '<%= rufio.build.directory %>/images'
+					dest: '<%= config.build.directory %>/<%= config.build.active %>/images'
 				}]
 			}
 		},
@@ -170,8 +201,8 @@ module.exports = function(grunt) {
 		uglify: {
 			build: {
 				files: {
-					'<%= rufio.build.directory %>/js/app.min.js' : [
-						'<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/{**/*.js,*.js}'
+					'<%= config.build.directory %>/<%= config.build.active %>/js/app.min.js': [
+						'<%= config.themes.directory %>/<%= config.themes.active %>/js/app.js'
 					]
 				}
 			}
@@ -180,51 +211,38 @@ module.exports = function(grunt) {
 		// Watch for file changes and build as needed
 		watch: {
 			options: {
+				forever: true,
+				spawn: false,
 				livereload: true
 			},
 			theme: {
-				files: ['{themes,filters}/**'],
-				tasks: ['rufio-dev', 'prettify']
+				files: [
+					'<%= config.themes.directory %>/<%= config.themes.active %>/*.html',
+					'<%= config.themes.directory %>/<%= config.themes.active %>/partials/*.html',
+					'<%= config.themes.directory %>/<%= config.themes.active %>/filters/*.js'
+				],
+				tasks: ['rufio:dev', 'prettify']
 			},
 			content: {
-				files: ['{posts,pages}/**'],
-				tasks: ['rufio-dev', 'prettify']
+				files: [
+					'<%= config.types.page.directory %>/**/*',
+					'<%= config.types.post.directory %>/**/*'
+				],
+				tasks: ['rufio:dev', 'prettify']
 			},
 			js: {
-				files: ['<%= rufio.themes.directory %>/<%= rufio.themes.active %>/js/**'],
-				tasks: ['copy']
+				files: ['<%= config.themes.directory %>/<%= config.themes.active %>/js/**/*.js'],
+				tasks: ['copy:js']
 			},
-			sass: {
-				files: ['<%= rufio.themes.directory %>/<%= rufio.themes.active %>/scss/**'],
-				tasks: ['sass:dev']
+			css: {
+				files: ['<%= config.build.directory %>/<%= config.build.active %>/css/**/*.css']
+			},
+			vendor: {
+				files: ['<%= config.themes.directory %>/<%= config.themes.active %>/bower_components/**/*'],
+				tasks: ['copy:vendor']
 			}
-		}
+		},
 
-	});
-
-	// Register npm tasks
-	[
-		'grunt-contrib-clean',
-		'grunt-contrib-connect',
-		'grunt-contrib-copy',
-		'grunt-contrib-htmlmin',
-		'grunt-contrib-imagemin',
-		'grunt-contrib-sass',
-		'grunt-contrib-uglify',
-		'grunt-contrib-watch',
-		'grunt-concurrent',
-		'grunt-prettify',
-		'grunt-svgmin',
-		'rufio',
-	].forEach(grunt.loadNpmTasks);
-
-	// Register composte tasks
-	grunt.util._({
-		'default': ['build-dev', 'concurrent:watch'],
-		'build': ['clean:build', 'copy', 'uglify:build', 'sass:build', 'assets', 'rufio', 'htmlmin:build', 'imagemin:build', 'imagemin:build'],
-		'build-dev': ['clean:build', 'copy', 'sass:dev', 'assets', 'rufio-dev', 'prettify', 'imagemin:dev', 'svgmin:build'],
-	}).map(function(task, name) {
-		grunt.registerTask(name, task);
 	});
 
 };

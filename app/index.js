@@ -2,14 +2,18 @@ var yeoman = require('yeoman-generator'),
 	inherits = require('util').inherits,
 	mkdirp = require('mkdirp');
 
+// Constructor
 var Generator = module.exports = function Generator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
+
+	// Success message
 	this.on('end', function () {
-		this.log.ok('YEAH!!!  Your new Rufio site is ready to use!!');
+		this.log.ok('Rufio! Rufio! Your Rufio site is ready.');
 	}.bind(this));
 };
 inherits(Generator, yeoman.generators.Base);
 
+// Prompt for info
 Generator.prototype.ask = function() {
 	var done = this.async();
 
@@ -19,10 +23,22 @@ Generator.prototype.ask = function() {
 	this.prompt([{
 		name: 'title',
 		message: 'Site Title:',
-		default: defaultTitle
+		default: defaultTitle,
+		validate: function(val) {
+			return typeof val !== 'undefined' && val != '';
+		}
 	}, {
-		name: 'url',
-		message: 'Site Hostname:'
+		name: 'hostname',
+		message: 'Site Hostname:',
+		validate: function(val) {
+			return typeof val !== 'undefined' && val != '';
+		}
+	}, {
+		name: 'author',
+		message: 'Site Author:',
+		validate: function(val) {
+			return typeof val !== 'undefined' && val != '';
+		}
 	}, {
 		name: 'tagline',
 		message: 'Tagline:'
@@ -32,33 +48,26 @@ Generator.prototype.ask = function() {
 	}.bind(this));
 };
 
+// Creates the directories and copies the core files
 Generator.prototype.init = function() {
-	mkdirp('filters');
 	mkdirp('media');
-	mkdirp('plugins');
-	this.template('bower.json');
 	this.template('package.json');
 	this.template('rufio.json');
-	this.copy('bowerrc', '.bowerrc');
 	this.copy('gitignore', '.gitignore');
 	this.copy('Gruntfile.js', 'Gruntfile.js');
-	this.copy('filters/navList.js', 'filters/navList.js');
 };
 
+// Create a theme
 Generator.prototype.makeTheme = function() {
-	this.env.create('rufio:theme', {
-		'arguments': ['default']
-	}).run();
-
-	this.env.create('rufio:page', {
-		'arguments': ['Index']
-	}).run();
-
-	this.env.create('rufio:post', {
-		'arguments': ['Example Post'],
-	}).run();
+	var done = this.async();
+	this.invoke('rufio:theme', {
+		args: ['default']
+	}, function() {
+		done();
+	});
 };
 
+// Install npm deps
 Generator.prototype.install = function() {
 	this.installDependencies();
 };

@@ -1,0 +1,192 @@
+@import './variables',
+		'compass/css3/box-shadow',
+		'compass/css3/transition';
+
+/*=====================
+ * Left Bar / Page Header
+ *=====================*/
+#navigation {
+	padding: 1em 2em;
+	position: fixed;
+	z-index: 3;
+	width: 16em;
+	left: -15.5em;
+	top: 0;
+	bottom: 0;
+	background: shade($color-opposite, 2%);
+	border-right: .125em ridge $color-accent;
+	@include box-shadow(-.188em 0 1.563em 0 $color-content);
+	@include transition(left 0.3s ease-out);
+
+	&:target {
+		left: 0;
+	}
+
+	.open {
+		content: '';
+		background: #fafafa;
+		border: .125em ridge $color-accent;
+		border-left: none;
+		background-size: contain;
+		width: 2em;
+		height: 2em;
+		position: absolute;
+		right: -2em;
+		top: 1em;
+		border-radius: 0 .5em .5em 0;
+
+		@media (min-width: 30em) {
+			top: 3.75em;
+		}
+
+		@media (min-width: 60.938em){
+			display: none;
+		}
+
+	}
+
+	@media (min-width: 30em) {
+		width: 20em;
+		left: -19.5em;
+	}
+
+	@media (min-width: 60.938em){
+		width: 20%;
+		left: 0;
+	}
+}
+.page-logo {
+	position: relative;
+	width: 100%;
+	height: 0;
+	padding-bottom: 30%;
+	margin-bottom: 5%;
+
+	a {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: url(/images/rufio.png) no-repeat;
+		background-size: contain;
+		text-indent: -9999em;
+	}
+
+	@media (min-width: 60.938em) {
+		margin-bottom: 10%;
+	}
+}
+.page-nav {
+	height: 86%;
+	overflow: hidden;
+
+	.page-nav-inner {
+		height: 100%;
+		padding: 2em;
+		margin: -2em;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+		-ms-overflow-style: none;
+	}
+
+	h3 {
+		text-align: left;
+		margin: 1em 0;
+		font-weight: normal;
+		border-bottom: .0625em solid #eee;
+		@include box-shadow(0 .438em .75em -.313em #eee);
+	}
+
+	li {
+		margin-bottom: .5em;
+
+		&:before {
+			content: '-';
+			float: left;
+			width: .875em;
+		}
+
+		a {
+			font-size: 1em;
+			white-space: no-wrap;
+		}
+
+	}
+
+	@media (min-width: 60.938em) {
+		h3 {
+			margin-top: 2em;
+		}
+		li a {
+			font-size: .825em;
+		}
+	}
+}
+
+/* Page "Footer" */
+.nav-bottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.social-nav {
+	position: absolute;
+	width: 100%;
+	top: -2.5em;
+	left: 0;
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+}
+.social-icon {
+	$icon-height : 1.688;
+	float: left;
+	width: 25%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	a {
+		display: block;
+		width: 100%;
+		height: $icon-height;
+		text-indent: -9999em;
+		background: url(/images/social-sprite.png) no-repeat;
+		@include transition(all .3s linear);
+	}
+	&:hover a {
+		-webkit-transform: rotateY(180deg);
+	}
+	&.github a {
+		$icon-pos : 0;
+		background-position: center (-($icon-height * $icon-pos) - ($icon-pos * 1));
+	}
+	&.wordpress a {
+		$icon-pos : 3;
+		background-position: center (-($icon-height * $icon-pos) - ($icon-pos * 1));
+	}
+	&.email a {
+		$icon-pos : 2;
+		background-position: center (-($icon-height * $icon-pos) - ($icon-pos * 1));
+	}
+	&.facebook a {
+		$icon-pos : 1;
+		background-position: center (-($icon-height * $icon-pos) - ($icon-pos * 1));
+	}
+}
+
+.powered-by {
+	display: block;
+	width: 100%;
+	padding: 1em 15%;
+	background: $color-opposite;
+	text-align: center;
+	font-size: .75em;
+	color: $color-accent;
+	@include box-shadow(0 -.125em .438em -.0625 $color-content);
+}
+

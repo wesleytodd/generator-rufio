@@ -1,5 +1,8 @@
 {
-  "name": "<%= input.title %>",
+  "name": "rufio-theme",
   "version": "0.0.1",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "normalize.scss": "git@github.com:JohnAlbin/normalize-scss.git"
+  }
 }

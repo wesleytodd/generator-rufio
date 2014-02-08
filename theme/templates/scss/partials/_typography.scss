@@ -1,0 +1,136 @@
+@import './variables',
+		'compass/css3/border-radius';
+
+// Font imports
+@import 'http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700',
+		'http://fonts.googleapis.com/css?family=Droid+Sans+Mono';
+
+/*=====================
+ * Typography
+ *=====================*/
+
+/* Base */
+body {
+	font-size: .9em;
+	line-height: 1.2;
+
+	@media (min-width: 45em) {
+		font-size: 1.1em;
+		line-height: 1.4;
+	}
+
+}
+html,
+button,
+input,
+select,
+textarea {
+	font-family: $font-content;
+	color: $color-content;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 1em;
+	font-weight: normal;
+	text-align: center;
+
+	@media (min-width: 30em) {
+		text-align: left;
+	}
+}
+h1 {
+	font-size: 2em;
+}
+h2 {
+	font-size: 1.5em;
+}
+h3 {
+	font-size: 1.17em;
+	font-weight: bold;
+}
+h4 {
+	font-size: 1em;
+	font-weight: bold;
+}
+h5, h6 {
+	font-size: 0.83em;
+	font-weight: bold;
+}
+
+/* Selection Colors */
+::-moz-selection {
+	color: $color-opposite;
+	background: $color-accent;
+	text-shadow: none;
+}
+::selection {
+	color: $color-opposite;
+	background: $color-accent;
+	text-shadow: none;
+}
+
+/* Links */
+a {
+	color: $color-accent;
+
+	&:focus,
+	&:hover {
+		color: darken($color-accent, 35%);
+		outline: none;
+	}
+	&:active,
+	&:hover {
+		outline: 0;
+	}
+}
+
+/* Content Blocks */
+p,
+pre,
+dl,
+menu,
+ol,
+ul {
+	margin: 0 0 1em;
+}
+p {
+	line-height: 2;
+}
+
+/* Lists */
+menu,
+ol,
+ul {
+	padding: 0 0 0 2.5em;
+}
+nav ul,
+nav ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Code Blocks */
+code,
+pre {
+	font-family: $font-mono;
+	font-size: 1em;
+}
+code {
+	@include border-radius(.5em);
+	background: rgba(233,233,233,.5);
+	overflow: auto;
+	white-space: pre;
+	padding: 0 .2em;
+}
+pre {
+	overflow: auto;
+	background: rgba(233,233,233,.5);
+	padding: 1em;
+
+	code {
+		background: none;
+		padding: 0;
+	}
+}

@@ -1,0 +1,4 @@
+	 	<%= (config.get('ENVIRONMENT') == 'prod') ? include('analytics.html') : '' %>
+		<%= (config.get('ENVIRONMENT') == 'dev') ? include('partials/livereload.html') : '' %>
+    </body>
+</html>

@@ -1,0 +1,1 @@
+<% if(config.get('ENVIRONMENT') == 'prod') { %>	<script src="/v/<%= config.get('build:active') %>/js/app.min.js"></script><% } else { %>	<script src="/v/<%= config.get('build:active') %>/js/app.js"></script><% } %>

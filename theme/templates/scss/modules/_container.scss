@@ -1,0 +1,29 @@
+@import '../partials/variables',
+		'compass/css3/border-radius';
+
+/* Containers */
+.container {
+	overflow: hidden;
+	padding: 1em;
+
+	&.border {
+		border: 1px dotted lighten($color-content, 50%);
+		background: $color-opposite;
+		@include border-radius(.5em);
+	}
+
+	@media (min-width: 45.625em){
+		&.left,
+		&.right {
+			width: 48%;
+		}
+		&.left {
+			float: left;
+			margin-right: 2%;
+		}
+		&.right {
+			float: right;
+			margin-left: 2%;
+		}
+	}
+}

@@ -1,3 +1,20 @@
-body {
+/*
+ * Base Styles
+ */
+@import '../bower_components/normalize.scss/normalize';
 
+// Border-box all the things
+@import 'compass/css3/box-sizing';
+* {
+	@include box-sizing(border-box);
 }
+
+/*
+ * App Styles
+ */
+@import './partials/typography',
+		'./partials/buttons',
+		'./partials/header',
+		'./partials/content',
+		'./modules/media',
+		'./modules/container';

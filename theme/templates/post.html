@@ -1,0 +1,11 @@
+<%= include('partials/header.html') %>
+	<div class="content">
+		<header class="post-header">
+			<small class="date"><%- meta.date.format(config.get('dateFormat')) %></small>
+			<h1><%- meta.title %></h1>
+		</header>
+		<section class="post-content">
+			<%= content %>
+		</section>
+	</div>
+<%= include('partials/footer.html') %>

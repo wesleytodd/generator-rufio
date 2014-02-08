@@ -1,0 +1,21 @@
+@import './variables',
+		'compass/css3/images',
+		'compass/css3/border-radius';
+
+
+/*=====================
+ * Buttons
+ *=====================*/
+button,
+.button,
+a.button,
+input.button {
+	display: inline-block;
+	color: $color-opposite;
+	cursor: pointer;
+	border: .0625em solid $color-accent;
+	padding: .2em 1em;
+
+	@include background-image(linear-gradient($color-accent 0%, lighten($color-accent, 5%) 44%, $color-accent 100%));
+	@include border-radius(.5em);
+}
