@@ -28,13 +28,22 @@ module.exports = function(grunt) {
 		grunt.registerTask(name, task);
 	});
 
+	// Load rufio config
+	var rufioConfig = grunt.file.readJSON('rufio.json');
+
+	// Get the type directories for use in the watch task
+	var typeDirs = [];
+	for (var i in rufioConfig.types) {
+		typeDirs.push(rufioConfig.types[i].directory);
+	}
+
 	//
 	// Init Config
 	//
 	grunt.initConfig({
 
 		// Load the rufio config
-		config: grunt.file.readJSON('rufio.json'),
+		config: rufioConfig,
 
 		// Clean before building
 		clean: {
@@ -224,10 +233,7 @@ module.exports = function(grunt) {
 				tasks: ['rufio:dev', 'prettify']
 			},
 			content: {
-				files: [
-					'<%= config.types.page.directory %>/**/*',
-					'<%= config.types.post.directory %>/**/*'
-				],
+				files: typeDirs,
 				tasks: ['rufio:dev', 'prettify']
 			},
 			js: {

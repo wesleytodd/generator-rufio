@@ -6,19 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-		<link rel="apple-touch-icon-precomposed" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-152.png">
-		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-152.png">
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-144.png">
-		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-120.png">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-114.png">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-72.png">
-		<link rel="apple-touch-icon-precomposed" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-57.png">
-		<link rel="icon" sizes="228x228" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-228.png">
-		<link rel="icon" sizes="128x128" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-128.png">
-		<link rel="icon" sizes="64x64" href="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-64.png">
+		<link rel="apple-touch-icon-precomposed" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-152.png">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-152.png">
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-144.png">
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-120.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-114.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-72.png">
+		<link rel="apple-touch-icon-precomposed" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-57.png">
+		<link rel="icon" sizes="228x228" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-228.png">
+		<link rel="icon" sizes="128x128" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-128.png">
+		<link rel="icon" sizes="64x64" href="/v/<%= config.get('build:active') %>/images/favicons/rufio-64.png">
 		<meta name="msapplication-TileColor" content="#1b1b1b">
-		<meta name="msapplication-TileImage" content="/v/<%= global.BUILD_VERSION %>/images/favicons/rufio-144.png">
-		<link rel="shortcut icon" href="/v/<%= global.BUILD_VERSION %>/images/favicons/favicon.ico"/>
+		<meta name="msapplication-TileImage" content="/v/<%= config.get('build:active') %>/images/favicons/rufio-144.png">
+		<link rel="shortcut icon" href="/v/<%= config.get('build:active') %>/images/favicons/favicon.ico"/>
 
 		<link rel="canonical" href="<%- meta.absUrl %>" />
 		<meta name="description" content="<%- meta.description %>">
@@ -32,7 +32,7 @@
 			<a href="#navigation" class="open">Open Navigation</a>
 			<nav class="page-nav">
 				<div class="page-nav-inner">
-					<h1 class="page-logo"><a href="/index.html" title="<%- global.hostname %> - <%- global.tagline %>"><%- global.hostname %> - <%- global.tagline %></a></h1>
+					<h1 class="page-logo"><a href="/index.html" title="<%- config.get('hostname') %> - <%- config.get('tagline') %>"><%- config.get('hostname') %> - <%- config.get('tagline') %></a></h1>
 					<%= filters.apply('navList', { items: types.page.items, classes: 'pages' }) %>
 
 					<h3>Articles</h3>
@@ -41,11 +41,11 @@
 			</nav>
 
 			<div class="nav-bottom">
-				<% if (global.socialLinks && global.socialLinks.length > 0) { %>
+				<% if (config.get('socialLinks') && config.get('socialLinks').length > 0) { %>
 					<div class="social-links">
 						<ul>
-							<% for (var i in global.socialLinks) { %>
-								<li class="social-icon <%= i %>"><a href="<%- global.socialLinks[i].href %>"><%- global.socialLinks[i].name %></a></li>
+							<% for (var i in config.get('socialLinks')) { %>
+								<li class="social-icon <%= i %>"><a href="<%- config.get('socialLinks')[i].href %>"><%- config.get('socialLinks')[i].name %></a></li>
 							<% } %>
 						</ul>
 					</div>

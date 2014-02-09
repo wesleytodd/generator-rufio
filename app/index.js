@@ -1,5 +1,6 @@
 var yeoman = require('yeoman-generator'),
 	inherits = require('util').inherits,
+	path = require('path'),
 	mkdirp = require('mkdirp');
 
 // Constructor
@@ -65,6 +66,45 @@ Generator.prototype.makeTheme = function() {
 	}, function() {
 		done();
 	});
+};
+
+// Create types
+Generator.prototype.createType = function() {
+
+	// Async
+	var done = this.async();
+
+	// Prompt for type
+	this.prompt([{
+		name: 'name',
+		message: 'Create type, leave blank to skip (ex: page):'
+	}], function(input) {
+		if (input.name !== '') {
+			this.invoke('rufio:type', {
+				args: [input.name]
+			}, function() {
+				// Recurse to allow for creating multiple types
+				this.createType();
+			}.bind(this));
+		} else {
+			done();
+		}
+	}.bind(this));
+
+};
+
+// Create index page
+Generator.prototype.createIndex = function() {
+	// Async
+	var done = this.async();
+
+	// Make directories
+	mkdirp(path.join('media', 'index'), function() {
+		mkdirp(path.join('content', 'page'), function() {
+			this.template('indexPage.md', path.join('content', 'page', 'index.md'));
+			done();
+		}.bind(this));
+	}.bind(this));
 };
 
 // Install npm deps

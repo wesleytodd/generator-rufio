@@ -14,7 +14,7 @@ module.exports = function(options) {
 	var out = '<nav class="' + options.classes + '"><ul>';
 	var c = 0;
 	for (var i in options.items) {
-		if (i < options.limit && this.config.get('ENVIRONMENT') == 'dev' || options.items[i].meta('status') == 'Published') {
+		if (i < options.limit && this.ENVIRONMENT == 'dev' || options.items[i].meta('status') == 'Published') {
 			out += '<li><a href="' + options.items[i].meta('permalink') + '">' + options.items[i].meta('title') + '</a></li>';
 			c++;
 		}

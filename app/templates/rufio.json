@@ -1,43 +1,41 @@
 {
-	"title": "<%= input.title %>",
-	"hostname": "<%= input.hostname %>",
-	"author": "<%= input.author %>",
-	<% if (input.tagline) { %>
-	"tagline": "<%= input.tagline %>",
-	<% } %>
-	"titleFormat": "<%%= meta.title %> - <%%= global.title %> - <%%= global.tagline %>",
-	"dateFormat": "MM-DD-YY",
-	"types": {
-		"page": {
-			"directory": "content/pages",
-			"permalink": "/<%%= meta.slug %>.html",
-			"jsonPermalink": "/<%%= meta.slug %>.json",
-			"filters": "template,markdown"
-		},
-		"post" : {
-			"directory": "content/posts",
-			"permalink": "/<%%= meta.date.year() %>/<%%= meta.date.month() + 1 %>/<%%= meta.slug %>.html",
-			"jsonPermalink": "/<%%= meta.date.year() %>/<%%= meta.date.month() + 1 %>/<%%= meta.slug %>.json",
-			"filters": "template,markdown"
-		}
-	},
-	"themes": {
-		"directory": "themes",
-		"active": "default"
-	},
-	"media": {
-		"directory": "media"
-	},
-	"build": {
-		"directory": "build",
-		"active": "active"
-	},
-	"plugins": {
-		"active": [
-			"json"
-		]
-	},
-	"rufio": {
-		"metaEnd": "--META--"
-	}
+  "title": "<%= input.title %>",
+  "hostname": "<%= input.hostname %>",
+  "author": "<%= input.author %>",
+  <% if (input.tagline) { %>"tagline": "<%= input.tagline %>",<% } %>
+  "titleFormat": "<%%= meta.title %> - <%%= global.title %> - <%%= global.tagline %>",
+  "dateFormat": "MM-DD-YY",
+  "types": {
+    "page": {
+      "directory": "content/page",
+      "permalink": "/<%%= meta.slug %>.html",
+      "filters": "template,markdown",
+      "jsonPermalink": "/<%%= meta.slug %>.json"
+    },
+    "post": {
+      "directory": "content/post",
+      "permalink": "/<%%= meta.date.getFullYear() %>/<%%= meta.date.getMonth() + 1 %>/<%%= slug %>.html",
+      "filters": "template,markdown",
+      "jsonPermalink": "/<%%= meta.date.getFullYear() %>/<%%= meta.date.getMonth() + 1 %>/<%%= slug %>.json"
+    }
+  },
+  "themes": {
+    "directory": "themes",
+    "active": "default"
+  },
+  "media": {
+    "directory": "media"
+  },
+  "build": {
+    "directory": "build",
+    "active": "active"
+  },
+  "plugins": {
+    "active": [
+      "json"
+    ]
+  },
+  "rufio": {
+    "metaEnd": "--META--"
+  }
 }

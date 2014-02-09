@@ -58,6 +58,9 @@ Generator.prototype.installComponents = function() {
 	if (this.input.bowerPackages) {
 		var done = this.async();
 
+		// Current dir
+		var cwd = process.cwd();
+
 		// Chdir to theme
 		process.chdir(path.join(this.themeDir, this.themeName));
 
@@ -68,6 +71,9 @@ Generator.prototype.installComponents = function() {
 		this.bowerInstall(pkgs, {'save': true}, function(err) {
 			// Install deps from bower deps
 			this.bowerInstall([], function(err) {
+				// Chdir back
+				process.chdir(cwd);
+
 				done();
 			});
 		}.bind(this));
