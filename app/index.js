@@ -99,7 +99,7 @@ Generator.prototype.createIndex = function() {
 	var done = this.async();
 
 	// Make directories
-	mkdirp(path.join('media', 'index'), function() {
+	mkdirp(path.join('media', 'page', 'index'), function() {
 		mkdirp(path.join('content', 'page'), function() {
 			this.template('indexPage.md', path.join('content', 'page', 'index.md'));
 			done();

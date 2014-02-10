@@ -14,9 +14,9 @@
     },
     "post": {
       "directory": "content/post",
-      "permalink": "/<%%= meta.date.getFullYear() %>/<%%= meta.date.getMonth() + 1 %>/<%%= slug %>.html",
+      "permalink": "/<%%= meta.date.year() %>/<%%= meta.date.month() + 1 %>/<%%= meta.slug %>.html",
       "filters": "template,markdown",
-      "jsonPermalink": "/<%%= meta.date.getFullYear() %>/<%%= meta.date.getMonth() + 1 %>/<%%= slug %>.json"
+      "jsonPermalink": "/<%%= meta.date.year() %>/<%%= meta.date.month() + 1 %>/<%%= meta.slug %>.json"
     }
   },
   "themes": {

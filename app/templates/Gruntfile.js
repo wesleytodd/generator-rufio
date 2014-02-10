@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(grunt) {
 	
 	//
@@ -34,7 +36,7 @@ module.exports = function(grunt) {
 	// Get the type directories for use in the watch task
 	var typeDirs = [];
 	for (var i in rufioConfig.types) {
-		typeDirs.push(rufioConfig.types[i].directory);
+		typeDirs.push(path.join(rufioConfig.types[i].directory, '**', '*'));
 	}
 
 	//
